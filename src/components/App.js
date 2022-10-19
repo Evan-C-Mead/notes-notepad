@@ -4,6 +4,7 @@ import Editor from "../components/Editor";
 import { data } from "../data/data";
 import Split from "react-split";
 import {nanoid} from "nanoid";
+import "react-mde/lib/styles/css/react-mde-all.css";
 
 /**
  * Challenge: Spend 10-20+ minutes reading through the code
@@ -42,9 +43,7 @@ export default function App() {
                 <Split sizes={[30, 70]} direction="horizontal" className="split">
                     <Sidebar notes={notes} currentNote={findCurrentNote()} setCurrentNoteId={setCurrentNoteId} newNote={createNewNote}/>
                     {
-                        currentNoteId &&
-                        notes.length > 0 &&
-                        <Editor currentNote={findCurrentNote()} updateNote={updateNote}/>}
+                        currentNoteId && notes.length > 0 && <Editor currentNote={findCurrentNote()} updateNote={updateNote}/>}
                 </Split>
                 :
                 <div className="no-notes">
