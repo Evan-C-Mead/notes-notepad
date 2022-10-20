@@ -42,13 +42,12 @@ export default function App() {
                 ?
                 <Split sizes={[30, 70]} direction="horizontal" className="split">
                     <Sidebar notes={notes} currentNote={findCurrentNote()} setCurrentNoteId={setCurrentNoteId} newNote={createNewNote}/>
-                    {
-                        currentNoteId && notes.length > 0 && <Editor currentNote={findCurrentNote()} updateNote={updateNote}/>}
+                    {currentNoteId && notes.length > 0 && <Editor currentNote={findCurrentNote()} updateNote={updateNote}/>}
                 </Split>
                 :
                 <div className="no-notes">
-                    <h1>You have no notes</h1>
-                    <button className="first-note" onClick={createNewNote}>Create one now</button>
+                    <h1>You have {notes.length} notes</h1>
+                    <button className="first-note" onClick={createNewNote}>Create note</button>
                 </div>
             }
         </main>
