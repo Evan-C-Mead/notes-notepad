@@ -7,7 +7,9 @@ import {nanoid} from "nanoid";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
 export default function App() {
-    const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes")) || [])
+    const [notes, setNotes] = React.useState(() =>
+        JSON.parse(localStorage.getItem("notes")) || []
+    )
     const [currentNoteId, setCurrentNoteId] = React.useState((notes[0] && notes[0].id) || "")
 
     function createNewNote() {
@@ -17,9 +19,19 @@ export default function App() {
     }
 
     function updateNote(text) {
-        setNotes(oldNotes => oldNotes.map(oldNote => {
-            return oldNote.id === currentNoteId ? {...oldNote, body: text} : oldNote
-        }))
+        // most recently-modified note to the top
+        setNotes(oldNotes => {
+            const newArray = []
+            for(let i = 0; i < oldNotes.length; i++) {
+                const oldNote = oldNotes[i]
+                if(oldNote.id === currentNoteId) {
+                    newArray.unshift({ ...oldNote, body: text })
+                } else {
+                    newArray.push(oldNote)
+                }
+            }
+            return newArray
+        })
     }
 
     function findCurrentNote() {
