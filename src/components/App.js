@@ -6,16 +6,8 @@ import Split from "react-split";
 import {nanoid} from "nanoid";
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-/**
- * Challenge: Spend 10-20+ minutes reading through the code
- * and trying to understand how it's currently working. Spend
- * as much time as you need to feel confident that you
- * understand the existing code (although you don't need
- * to fully understand everything to move on)
- */
-
 export default function App() {
-    const [notes, setNotes] = React.useState([])
+    const [notes, setNotes] = React.useState(JSON.parse(localStorage.getItem("notes")) || [])
     const [currentNoteId, setCurrentNoteId] = React.useState((notes[0] && notes[0].id) || "")
 
     function createNewNote() {
@@ -36,6 +28,10 @@ export default function App() {
         }) || notes[0]
     }
 
+    React.useEffect(() => {
+        localStorage.setItem("notes", JSON.stringify(notes))
+    }, [notes])
+
     return (
         <main>
             {notes.length > 0
@@ -46,7 +42,7 @@ export default function App() {
                 </Split>
                 :
                 <div className="no-notes">
-                    <h1>You have {notes.length} notes</h1>
+                    <h1>You have no notes</h1>
                     <button className="first-note" onClick={createNewNote}>Create note</button>
                 </div>
             }
