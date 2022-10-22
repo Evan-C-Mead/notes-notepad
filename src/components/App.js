@@ -18,6 +18,11 @@ export default function App() {
         setCurrentNoteId(newNote.id)
     }
 
+    function deleteNote(event, noteId) {
+        event.stopPropagation()
+        setNotes(oldNotes => oldNotes.filter(notes => notes.id !== noteId))
+    }
+
     function updateNote(text) {
         // most recently-modified note to the top
         setNotes(oldNotes => {
@@ -49,7 +54,7 @@ export default function App() {
             {notes.length > 0
                 ?
                 <Split sizes={[30, 70]} direction="horizontal" className="split">
-                    <Sidebar notes={notes} currentNote={findCurrentNote()} setCurrentNoteId={setCurrentNoteId} newNote={createNewNote}/>
+                    <Sidebar notes={notes} currentNote={findCurrentNote()} setCurrentNoteId={setCurrentNoteId} newNote={createNewNote} deleteNote={deleteNote}/>
                     {currentNoteId && notes.length > 0 && <Editor currentNote={findCurrentNote()} updateNote={updateNote}/>}
                 </Split>
                 :
